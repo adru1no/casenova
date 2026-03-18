@@ -5,7 +5,6 @@
 <title>CaseNova</title>
 
 <style>
-/* Общие стили */
 body{
   margin:0;
   font-family:Arial, sans-serif;
@@ -117,6 +116,33 @@ nav a:hover{
   cursor:pointer;
 }
 
+/* Барабан для анимации */
+.case-roll {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 400px;
+  margin: 30px auto;
+  border: 2px solid #38bdf8;
+  border-radius: 12px;
+  background: #020617;
+  height: 100px;
+  position: relative;
+}
+
+.case-items {
+  display: flex;
+  transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.case-item {
+  min-width: 100px;
+  text-align: center;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+}
+
 footer{
   margin-top:80px;
   padding:30px;
@@ -125,53 +151,98 @@ footer{
   color:#64748b;
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
   <div class="logo">CaseNova</div>
   <nav>
     <a href="#">Home</a>
-    <a href="#">Cases</a>
-    <a href="#">Upgrade</a>
-    <a href="#">Inventory</a>
+    <a href="#cases">Cases</a>
+    <a href="#profile">Profile</a>
   </nav>
 </header>
 
 <section class="hero">
   <h1>Open Cases. Win Skins.</h1>
   <p>The ultimate case opening experience</p>
-  <button class="open-btn">Open Case</button>
+  <button class="open-btn">Open Starter Case</button>
 </section>
 
-<section class="cases">
-  <h2>Popular Cases</h2>
+<section id="cases" class="cases">
+  <h2>Starter Case</h2>
+  <div class="case-roll">
+    <div class="case-items" id="caseItems">
+      <!-- Скины будут вставляться JS -->
+    </div>
+  </div>
   <div class="case-container">
     <div class="case">
       <img src="https://i.imgur.com/7QKQF5Q.png" alt="Starter Case">
       <h3>Starter Case</h3>
       <p>$1</p>
-      <button>Open</button>
-    </div>
-    <div class="case">
-      <img src="https://i.imgur.com/7QKQF5Q.png" alt="Sniper Case">
-      <h3>Sniper Case</h3>
-      <p>$5</p>
-      <button>Open</button>
-    </div>
-    <div class="case">
-      <img src="https://i.imgur.com/7QKQF5Q.png" alt="Knife Case">
-      <h3>Knife Case</h3>
-      <p>$25</p>
-      <button>Open</button>
+      <button class="case-btn">Open</button>
     </div>
   </div>
+</section>
+
+<section id="profile" class="cases">
+  <h2>Profile</h2>
+  <p>Name: Player1</p>
+  <p>Inventory:</p>
+  <ul id="inventory">
+    <!-- Выигранные скины будут здесь -->
+  </ul>
 </section>
 
 <footer>
   © 2026 CaseNova
 </footer>
 
+<script>
+// Скины стартового кейса
+const starterSkins = [
+  { name: "P2000 | Handgun", rarity: "Common", price: "$0.5" },
+  { name: "USP-S | Pistol", rarity: "Common", price: "$0.7" },
+  { name: "FAMAS | Assault Rifle", rarity: "Common", price: "$0.6" },
+  { name: "MP7 | SMG", rarity: "Common", price: "$0.5" }
+];
+
+const caseItemsDiv = document.getElementById("caseItems");
+
+// Заполняем барабан
+starterSkins.forEach(item => {
+  const div = document.createElement("div");
+  div.classList.add("case-item");
+  div.textContent = item.name;
+  caseItemsDiv.appendChild(div);
+});
+
+// Функция открытия кейса с анимацией
+function openCase() {
+  const randomIndex = Math.floor(Math.random() * starterSkins.length);
+
+  const shift = -randomIndex * 100; // ширина элемента 100px
+  caseItemsDiv.style.transition = "transform 2s cubic-bezier(0.25, 1, 0.5, 1)";
+  caseItemsDiv.style.transform = `translateX(${shift}px)`;
+
+  setTimeout(() => {
+    const item =arterSkins[randomIndex];
+    const inventory = document.getElementById("inventory");
+    const li = document.createElement("li");
+    li.textContent = `${item.name} (${item.rarity}) — ${item.price}`;
+    inventory.appendChild(li);
+
+    alert(`You won: ${item.name} (${item.rarity}) — ${item.price}`);
+  }, 2100);
+}
+
+// Подключаем кнопки
+document.querySelector(".open-btn").addEventListener("click", openCase);
+document.querySelector(".case-btn").addEventListener("click", openCase);
+</script>
+
 </body>
-</html>
+</html> 
+      
