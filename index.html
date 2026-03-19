@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <title>CaseNova</title>
 
@@ -11,6 +12,7 @@ margin:0;
 font-family:Arial;
 background:#0f172a;
 color:white;
+text-align:center;
 }
 
 header{
@@ -33,41 +35,35 @@ text-decoration:none;
 }
 
 .cases{
-text-align:center;
 padding:60px;
 }
 
 .case-container{
 display:flex;
 justify-content:center;
-gap:30px;
-margin-top:30px;
+gap:40px;
+margin-top:40px;
 }
 
 .case{
 background:#020617;
-padding:20px;
+padding:25px;
 border-radius:10px;
 width:200px;
 }
 
 .case button{
-margin-top:10px;
-padding:10px 20px;
-background:#38bdf8;
+padding:12px 25px;
 border:none;
+background:#38bdf8;
 border-radius:6px;
 cursor:pointer;
-}
-
-.roll-area{
-margin-top:40px;
-display:flex;
-justify-content:center;
+font-size:16px;
 }
 
 .roll-window{
-width:700px;
+width:720px;
+margin:40px auto;
 overflow:hidden;
 border:3px solid #38bdf8;
 border-radius:10px;
@@ -80,13 +76,12 @@ transition:transform 5s cubic-bezier(.17,.67,.35,1);
 }
 
 .item{
-width:140px;
+width:120px;
 padding:10px;
-text-align:center;
 }
 
 .item img{
-width:90px;
+width:80px;
 }
 
 .consumer{border-bottom:4px solid gray;}
@@ -96,11 +91,17 @@ width:90px;
 .covert{border-bottom:4px solid red;}
 .knife{border-bottom:4px solid gold;}
 
+#inventory{
+list-style:none;
+padding:0;
+}
+
 #inventory li{
-margin:5px 0;
+margin:5px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -119,37 +120,41 @@ margin:5px 0;
 
 <section id="cases" class="cases">
 
-<h1>Case Opening</h1>
-
-<div class="roll-area">
+<h1>Open Cases</h1>
 
 <div class="roll-window">
-
 <div class="roll" id="roll"></div>
-
-</div>
-
 </div>
 
 <div class="case-container">
 
 <div class="case">
+
 <h3>Starter Case</h3>
 <p>$1</p>
-<button onclick="openCase(starterCase)">Open</button>
+
+<button onclick="openCase('starter')">
+Open
+</button>
+
 </div>
 
 <div class="case">
+
 <h3>Gold Case</h3>
 <p>$20</p>
-<button onclick="openCase(goldCase)">Open</button>
+
+<button onclick="openCase('gold')">
+Open
+</button>
+
 </div>
 
 </div>
 
 </section>
 
-<section id="profile" class="cases">
+<section id="profile">
 
 <h2>Inventory</h2>
 
@@ -165,47 +170,34 @@ const starterCase=[
 {name:"USP-S",img:"images/usp.png",rarity:"consumer"},
 {name:"MP7",img:"images/mp7.png",rarity:"consumer"},
 {name:"FAMAS",img:"images/famas.png",rarity:"consumer"},
-{name:"Glock",img:"images/glock.png",rarity:"consumer"},
-{name:"UMP45",img:"images/ump.png",rarity:"consumer"},
-{name:"Nova",img:"images/nova.png",rarity:"consumer"},
-{name:"MAC10",img:"images/mac10.png",rarity:"consumer"},
-{name:"P250",img:"images/p250.png",rarity:"consumer"},
-{name:"MP9",img:"images/mp9.png",rarity:"consumer"},
-{name:"Galil",img:"images/galil.png",rarity:"consumer"},
-{name:"SG553",img:"images/sg553.png",rarity:"consumer"},
-{name:"MAG7",img:"images/mag7.png",rarity:"consumer"},
-{name:"Negev",img:"images/negev.png",rarity:"consumer"},
-{name:"XM1014",img:"images/xm1014.png",rarity:"consumer"},
-{name:"MP5",img:"images/mp5.png",rarity:"consumer"},
-{name:"CZ75",img:"images/cz75.png",rarity:"consumer"},
-{name:"Tec9",img:"images/tec9.png",rarity:"consumer"}
+{name:"Glock-18",img:"images/glock.png",rarity:"consumer"}
 
 ];
 
 const goldCase=[
 
-{name:"AK47 Redline",img:"images/ak47.png",rarity:"classified"},
+{name:"AK-47 Redline",img:"images/ak47.png",rarity:"classified"},
 {name:"M4A4 Desolate Space",img:"images/m4a4.png",rarity:"classified"},
 {name:"AWP Neo Noir",img:"images/awp.png",rarity:"covert"},
-{name:"M4A1S Decimator",img:"images/m4a1s.png",rarity:"classified"},
-{name:"AWP Fever Dream",img:"images/awp2.png",rarity:"classified"},
 {name:"Desert Eagle",img:"images/deagle.png",rarity:"restricted"},
-{name:"USP Cortex",img:"images/usp2.png",rarity:"restricted"},
-{name:"Glock Water Elemental",img:"images/glock2.png",rarity:"restricted"},
-{name:"AK Phantom",img:"images/ak2.png",rarity:"classified"},
-{name:"M4 Neo Noir",img:"images/m4a42.png",rarity:"covert"},
-{name:"SSG Dragonfire",img:"images/ssg.png",rarity:"classified"},
-{name:"P90 Trigon",img:"images/p90.png",rarity:"restricted"},
-{name:"AK Frontside",img:"images/ak4.png",rarity:"classified"},
-{name:"AWP Hyper Beast",img:"images/awp3.png",rarity:"covert"},
 {name:"Knife",img:"images/knife.png",rarity:"knife"}
 
 ];
 
-function openCase(caseItems)
-  t roll=document.getElementById("roll");
+function openCase(type){
+
+let caseItems;
+
+if(type==="starter"){
+caseItems=starterCase;
+}else{
+caseItems=goldCase;
+}
+
+const roll=document.getElementById("roll");
 
 roll.innerHTML="";
+roll.style.transform="translateX(0px)";
 
 let rollItems=[];
 
@@ -234,27 +226,27 @@ roll.appendChild(div);
 
 const winIndex=50;
 
-const shift=-(winIndex*140);
+const shift=-(winIndex*120);
 
 setTimeout(()=>{
 
-roll.style.transform=`translateX(${shift}px)`
+roll.style.transform=`translateX(${shift}px)`;
 
 },100);
 
 setTimeout(()=>{
 
-const win=rollItems[winIndex];
+const winItem=rollItems[winIndex];
 
 const inventory=document.getElementById("inventory");
 
 const li=document.createElement("li");
 
-li.textContent=win.name;
+li.textContent=winItem.name;
 
 inventory.appendChild(li);
 
-alert("You won: "+win.name);
+alert("You won: "+winItem.name);
 
 },5200);
 
@@ -263,6 +255,4 @@ alert("You won: "+win.name);
 </script>
 
 </body>
-</html>{
-
-cons
+</html>
