@@ -5,244 +5,275 @@
 <title>CaseNova</title>
 
 <style>
+
 body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#0f172a,#020617);
-  color:white;
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
 }
 
-/* Верхняя панель */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  background:#020617;
-  border-bottom:1px solid #1e293b;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#020617;
+border-bottom:1px solid #1e293b;
 }
 
 .logo{
-  font-size:28px;
-  font-weight:bold;
-  color:#38bdf8;
+font-size:28px;
+font-weight:bold;
+color:#38bdf8;
 }
 
 nav a{
-  color:white;
-  text-decoration:none;
-  margin-left:25px;
-  font-size:16px;
+color:white;
+text-decoration:none;
+margin-left:25px;
 }
 
-nav a:hover{
-  color:#38bdf8;
-}
-
-/* Главный экран */
 .hero{
-  text-align:center;
-  padding:120px 20px;
+text-align:center;
+padding:100px 20px;
 }
 
-.hero h1{
-  font-size:60px;
-  margin-bottom:20px;
-}
-
-.hero p{
-  font-size:20px;
-  color:#94a3b8;
-  margin-bottom:40px;
-}
-
-.open-btn{
-  padding:15px 40px;
-  font-size:18px;
-  border:none;
-  border-radius:10px;
-  background:#38bdf8;
-  color:black;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.open-btn:hover{
-  background:#0ea5e9;
-  transform:scale(1.05);
-}
-
-/* Кейсы */
 .cases{
-  padding:60px 40px;
-  text-align:center;
+padding:60px 40px;
+text-align:center;
 }
 
 .case-container{
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  flex-wrap:wrap;
-  margin-top:40px;
+display:flex;
+justify-content:center;
+gap:30px;
+margin-top:40px;
 }
 
 .case{
-  background:#020617;
-  padding:25px;
-  border-radius:12px;
-  width:180px;
-  transition:0.3s;
-  border:1px solid #1e293b;
-}
-
-.case:hover{
-  transform:translateY(-5px);
-  border-color:#38bdf8;
-}
-
-.case img{
-  width:100%;
-}
-
-.case h3{
-  margin:15px 0 10px;
+background:#020617;
+padding:25px;
+border-radius:12px;
+width:200px;
+border:1px solid #1e293b;
 }
 
 .case button{
-  padding:10px 20px;
-  border:none;
-  background:#38bdf8;
-  border-radius:6px;
-  cursor:pointer;
+padding:10px 20px;
+border:none;
+background:#38bdf8;
+border-radius:6px;
+cursor:pointer;
 }
 
-/* Барабан для анимации */
-.case-roll {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  width: 400px;
-  margin: 30px auto;
-  border: 2px solid #38bdf8;
-  border-radius: 12px;
-  background: #020617;
-  height: 100px;
-  position: relative;
+.case-roll{
+display:flex;
+justify-content:center;
+overflow:hidden;
+width:600px;
+margin:40px auto;
+border:2px solid #38bdf8;
+border-radius:12px;
+background:#020617;
+height:120px;
 }
 
-.case-items {
-  display: flex;
-  transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1);
+.case-items{
+display:flex;
+transition:transform 3s cubic-bezier(0.25,1,0.5,1);
 }
 
-.case-item {
-  min-width: 100px;
-  text-align: center;
-  padding: 10px;
-  color: white;
-  font-weight: bold;
+.case-item{
+min-width:120px;
+text-align:center;
+padding:10px;
+}
+
+.case-item img{
+width:80px;
+}
+
+#inventory li{
+margin:5px 0;
 }
 
 footer{
-  margin-top:80px;
-  padding:30px;
-  text-align:center;
-  background:#020617;
-  color:#64748b;
+margin-top:80px;
+padding:30px;
+text-align:center;
+background:#020617;
+color:#64748b;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">CaseNova</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#cases">Cases</a>
-    <a href="#profile">Profile</a>
-  </nav>
+<div class="logo">CaseNova</div>
+<nav>
+<a href="#">Home</a>
+<a href="#cases">Cases</a>
+<a href="#profile">Profile</a>
+</nav>
 </header>
 
 <section class="hero">
-  <h1>Open Cases. Win Skins.</h1>
-  <p>The ultimate case opening experience</p>
-  <button class="open-btn">Open Starter Case</button>
+<h1>Open Cases. Win Skins.</h1>
+<p>CaseNova demo case opening</p>
 </section>
 
 <section id="cases" class="cases">
-  <h2>Starter Case</h2>
-  <div class="case-roll">
-    <div class="case-items" id="caseItems">
-      <!-- Скины будут вставляться JS -->
-    </div>
-  </div>
-  <div class="case-container">
-    <div class="case">
-      <img src="https://i.imgur.com/7QKQF5Q.png" alt="Starter Case">
-      <h3>Starter Case</h3>
-      <p>$1</p>
-      <button class="case-btn">Open</button>
-    </div>
-  </div>
+
+<div class="case-roll">
+<div class="case-items" id="caseItems"></div>
+</div>
+
+<h2>Cases</h2>
+
+<div class="case-container">
+
+<div class="case">
+<h3>Starter Case</h3>
+<p>$1</p>
+<button onclick="openCase('starter')">Open</button>
+</div>
+
+<div class="case">
+<h3>Gold Case</h3>
+<p>$20</p>
+<button onclick="openCase('gold')">Open</button>
+</div>
+
+</div>
+
 </section>
 
 <section id="profile" class="cases">
-  <h2>Profile</h2>
-  <p>Name: Player1</p>
-  <p>Inventory:</p>
-  <ul id="inventory">
-    <!-- Выигранные скины будут здесь -->
-  </ul>
+<h2>Profile</h2>
+<p>Name: Player</p>
+<p>Inventory:</p>
+<ul id="inventory"></ul>
 </section>
 
 <footer>
-  © 2026 CaseNova
+© 2026 CaseNova
 </footer>
 
 <script>
-// Скины стартового кейса
-const starterSkins = [
-  { name: "P2000 | Handgun", rarity: "Common", price: "$0.5" },
-  { name: "USP-S | Pistol", rarity: "Common", price: "$0.7" },
-  { name: "FAMAS | Assault Rifle", rarity: "Common", price: "$0.6" },
-  { name: "MP7 | SMG", rarity: "Common", price: "$0.5" }
+
+const starterCase=[
+
+{name:"P2000",img:"images/p2000.png"},
+{name:"USP-S",img:"images/usp.png"},
+{name:"MP7",img:"images/mp7.png"},
+{name:"FAMAS",img:"images/famas.png"},
+{name:"Glock-18",img:"images/glock.png"},
+{name:"UMP-45",img:"images/ump.png"},
+{name:"Nova",img:"images/nova.png"},
+{name:"MAC-10",img:"images/mac10.png"},
+{name:"Five-SeveN",img:"images/fiveseven.png"},
+{name:"P250",img:"images/p250.png"},
+{name:"PP-Bizon",img:"images/bizon.png"},
+{name:"MP9",img:"images/mp9.png"},
+{name:"Galil AR",img:"images/galil.png"},
+{name:"SG 553",img:"images/sg553.png"},
+{name:"MAG-7",img:"images/mag7.png"},
+{name:"Negev",img:"images/negev.png"},
+{name:"XM1014",img:"images/xm1014.png"},
+{name:"MP5-SD",img:"images/mp5.png"},
+{name:"CZ75",img:"images/cz75.png"},
+{name:"Tec-9",img:"images/tec9.png"}
+
 ];
 
-const caseItemsDiv = document.getElementById("caseItems");
+const goldCase=[
 
-// Заполняем барабан
-starterSkins.forEach(item => {
-  const div = document.createElement("div");
-  div.classList.add("case-item");
-  div.textContent = item.name;
-  caseItemsDiv.appendChild(div);
+{name:"AK-47 Redline",img:"images/ak47.png"},
+{name:"M4A4 Desolate Space",img:"images/m4a4.png"},
+{name:"AWP Neo-Noir",img:"images/awp.png"},
+{name:"AK Phantom Disruptor",img:"images/ak2.png"},
+{name:"M4A1-S Decimator",img:"images/m4a1s.png"},
+{name:"AWP Fever Dream",img:"images/awp2.png"},
+{name:"USP Cortex",img:"images/usp2.png"},
+{name:"Glock Water Elemental",img:"images/glock2.png"},
+{name:"Desert Eagle Conspiracy",img:"images/deagle.png"},
+{name:"AK Orbit",img:"images/ak3.png"},
+{name:"M4 Neo-Noir",img:"images/m4a42.png"},
+{name:"FAMAS Roll Cage",img:"images/famas2.png"},
+{name:"SSG Dragonfire",img:"images/ssg.png"},
+{name:"P90 Trigon",img:"images/p90.png"},
+{name:"Five-SeveN Monkey",img:"images/fiveseven2.png"},
+{name:"USP Neo-Noir",img:"images/usp3.png"},
+{name:"AK Frontside Misty",img:"images/ak4.png"},
+{name:"M4A1 Hyper Beast",img:"images/m4a1s2.png"},
+{name:"AWP Hyper Beast",img:"images/awp3.png"},
+{name:"Knife",img:"images/knife.png"}
+
+];
+
+function fillRoll(items){
+
+const roll=document.getElementById("caseItems");
+roll.innerHTML="";
+
+items.forEach
+  >{
+
+const div=document.createElement("div");
+div.className="case-item";
+
+div.innerHTML=`
+<img src="${item.img}">
+<p>${item.name}</p>
+`;
+
+roll.appendChild(div);
+
 });
 
-// Функция открытия кейса с анимацией
-function openCase() {
-  const randomIndex = Math.floor(Math.random() * starterSkins.length);
-
-  const shift = -randomIndex * 100; // ширина элемента 100px
-  caseItemsDiv.style.transition = "transform 2s cubic-bezier(0.25, 1, 0.5, 1)";
-  caseItemsDiv.style.transform = `translateX(${shift}px)`;
-
-  setTimeout(() => {
-    const item =arterSkins[randomIndex];
-    const inventory = document.getElementById("inventory");
-    const li = document.createElement("li");
-    li.textContent = `${item.name} (${item.rarity}) — ${item.price}`;
-    inventory.appendChild(li);
-
-    alert(`You won: ${item.name} (${item.rarity}) — ${item.price}`);
-  }, 2100);
 }
 
-// Подключаем кнопки
-document.querySelector(".open-btn").addEventListener("click", openCase);
-document.querySelector(".case-btn").addEventListener("click", openCase);
+function openCase(type){
+
+let items;
+
+if(type==="starter"){
+items=starterCase;
+}else{
+items=goldCase;
+}
+
+fillRoll(items);
+
+const randomIndex=Math.floor(Math.random()*items.length);
+
+const shift=-randomIndex*120;
+
+const roll=document.getElementById("caseItems");
+
+setTimeout(()=>{
+roll.style.transform=`translateX(${shift}px)`
+},100);
+
+setTimeout(()=>{
+
+const inventory=document.getElementById("inventory");
+
+const li=document.createElement("li");
+li.textContent=items[randomIndex].name;
+
+inventory.appendChild(li);
+
+alert("You won: "+items[randomIndex].name);
+
+},3100);
+
+}
+
 </script>
 
 </body>
-</html> 
-      
+</html>(item=
