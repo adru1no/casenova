@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>CaseNova</title>
@@ -76,7 +76,6 @@ position:relative;
 
 .roll{
 display:flex;
-transition:transform 4s cubic-bezier(.17,.67,.35,1);
 }
 
 .item{
@@ -95,12 +94,12 @@ width:80px;
 .covert{border-bottom:4px solid red;}
 .knife{border-bottom:4px solid gold;}
 
-.center-arrow{
+.arrow{
 position:absolute;
-top:-10px;
+top:-20px;
 left:50%;
 transform:translateX(-50%);
-font-size:30px;
+font-size:40px;
 color:red;
 }
 
@@ -139,7 +138,7 @@ padding:0;
 
 <div class="roll-window">
 
-<div class="center-arrow">▼</div>
+<div class="arrow">▼</div>
 
 <div class="roll" id="roll"></div>
 
@@ -178,10 +177,10 @@ let balance=50
 
 const starterCase=[
 
-{name:"P2000",img:"images/p2000.png",rarity:"consumer",chance:60},
-{name:"USP-S",img:"images/usp.png",rarity:"consumer",chance:60},
-{name:"MP7",img:"images/mp7.png",rarity:"consumer",chance:50},
-{name:"FAMAS",img:"images/famas.png",rarity:"consumer",chance:50},
+{name:"P2000",img:"images/p2000.png",rarity:"consumer",chance:50},
+{name:"USP-S",img:"images/usp.png",rarity:"consumer",chance:50},
+{name:"MP7",img:"images/mp7.png",rarity:"consumer",chance:40},
+{name:"FAMAS",img:"images/famas.png",rarity:"consumer",chance:40},
 {name:"Glock-18",img:"images/glock.png",rarity:"consumer",chance:40}
 
 ]
@@ -190,30 +189,26 @@ const goldCase=[
 
 {name:"AK-47 Redline",img:"images/ak47.png",rarity:"classified",chance:10},
 {name:"M4A4 Desolate Space",img:"images/m4a4.png",rarity:"classified",chance:10},
-{name:"AWP Neo Noir",img:"images/awp.png",rarity:"covert",chance:4},
-{name:"Desert Eagle",img:"images/deagle.png",rarity:"restricted",chance:25},
+{name:"AWP Neo Noir",img:"images/awp.png",rarity:"covert",chance:5},
+{name:"Desert Eagle",img:"images/deagle.png",rarity:"restricted",chance:20},
 {name:"Knife",img:"images/knife.png",rarity:"knife",chance:1}
 
 ]
 
 function getRandomItem(items){
 
-let totalChance=0
+let total=0
+items.forEach(i=>total+=i.chance)
 
-items.forEach(item=>{
-totalChance+=item.chance
-})
-
-let random=Math.random()*totalChance
-
+let random=Math.random()*total
 let current=0
 
-for(let i=0;i<items.length;i++){
+for(let item of items){
 
-current+=items[i].chance
+current+=item.chance
 
 if(random<=current){
-return items[i]
+return item
 }
 
 }
@@ -221,44 +216,39 @@ return items[i]
 }
 
 function updateBalance(){
-document.getElementById("balance").textContent="Balance: $"+balance
+
+document.getElementById("balance").innerText="Balance: $"+balance
+
 }
 
 function openCase(type,cost){
 
-if(rolling)return
+if(rolling) return
 
 if(balance<cost){
 
-alert("Not enough balance!")
+alert("Not enough balance")
 
 return
 
 }
 
 balance-=cost
-
 updateBalance()
 
 rolling=true
 
-let caseItems=(type==="starter")?starterCase:goldCase
+let items = type==="starter" ? starterCase : goldCase
 
 const roll=document.getElementById("roll")
 
 roll.innerHTML=""
 
-roll.style.transition="none"
-
-roll.style.transform="translateX(0px)"
-
 let rollItems=[]
 
-for(let i=0;i<80;i++){
+for(let i=0;i<60;i++){
 
-const item=getRandomItem(caseItems)
-
-rollItems.push(item)
+rollItems.push(getRandomItem(items))
 
 }
 
@@ -274,23 +264,17 @@ roll.appendChild(div)
 
 })
 
-const nst itemWidth=120
+const itemWidth=120
+const center=360
 
-const windowWidth=720
+const winIndex=40
 
-const centerOffset=(windowWidth/2)-(itemWidth/2)
-
-const shift=-(winIndex*itemWidth-centerOffset)
-
-setTimeout(()=>{
+const shift=-(winIndex*itemWidth-center+itemWidth/2)
 
 roll.style.transition="transform 4s cubic-bezier(.17,.67,.35,1)"
-
 roll.style.transform=`translateX(${shift}px)`
 
-},50)
-
-setTimeout(()=>{
+setTimeout((>{
 
 const winItem=rollItems[winIndex]
 
@@ -315,4 +299,4 @@ updateBalance()
 </script>
 
 </body>
-</html> winIndex=60
+</html>)
