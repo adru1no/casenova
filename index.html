@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <title>CaseNova</title>
 
@@ -10,22 +9,25 @@
 body{
 margin:0;
 font-family:Arial;
-background:#0f172a;
 color:white;
-text-align:center;
+
+background-image:url("images/background.png");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 }
 
 header{
 display:flex;
 justify-content:space-between;
 padding:20px 40px;
-background:#020617;
+background:rgba(0,0,0,0.7);
 }
 
 .logo{
 font-size:26px;
 font-weight:bold;
-color:#38bdf8;
+color:#ff9800;
 }
 
 nav a{
@@ -36,6 +38,7 @@ text-decoration:none;
 
 .cases{
 padding:60px;
+text-align:center;
 }
 
 .case-container{
@@ -46,7 +49,7 @@ margin-top:40px;
 }
 
 .case{
-background:#020617;
+background:rgba(0,0,0,0.7);
 padding:25px;
 border-radius:10px;
 width:200px;
@@ -55,7 +58,7 @@ width:200px;
 .case button{
 padding:12px 25px;
 border:none;
-background:#38bdf8;
+background:#ff9800;
 border-radius:6px;
 cursor:pointer;
 font-size:16px;
@@ -65,19 +68,21 @@ font-size:16px;
 width:720px;
 margin:40px auto;
 overflow:hidden;
-border:3px solid #38bdf8;
+border:3px solid orange;
 border-radius:10px;
-background:#020617;
+background:rgba(0,0,0,0.7);
+position:relative;
 }
 
 .roll{
 display:flex;
-transition:transform 5s cubic-bezier(.17,.67,.35,1);
+transition:transform 4s cubic-bezier(.17,.67,.35,1);
 }
 
 .item{
 width:120px;
 padding:10px;
+text-align:center;
 }
 
 .item img{
@@ -85,23 +90,31 @@ width:80px;
 }
 
 .consumer{border-bottom:4px solid gray;}
-.milspec{border-bottom:4px solid blue;}
 .restricted{border-bottom:4px solid purple;}
 .classified{border-bottom:4px solid hotpink;}
 .covert{border-bottom:4px solid red;}
 .knife{border-bottom:4px solid gold;}
+
+.center-arrow{
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
+font-size:30px;
+color:red;
+}
+
+#balance{
+font-size:18px;
+margin-top:20px;
+}
 
 #inventory{
 list-style:none;
 padding:0;
 }
 
-#inventory li{
-margin:5px;
-}
-
 </style>
-
 </head>
 
 <body>
@@ -122,32 +135,28 @@ margin:5px;
 
 <h1>Open Cases</h1>
 
+<div id="balance">Balance: $50</div>
+
 <div class="roll-window">
+
+<div class="center-arrow">▼</div>
+
 <div class="roll" id="roll"></div>
+
 </div>
 
 <div class="case-container">
 
 <div class="case">
-
 <h3>Starter Case</h3>
 <p>$1</p>
-
-<button onclick="openCase('starter')">
-Open
-</button>
-
+<button onclick="openCase('starter',1)">Open</button>
 </div>
 
 <div class="case">
-
 <h3>Gold Case</h3>
 <p>$20</p>
-
-<button onclick="openCase('gold')">
-Open
-</button>
-
+<button onclick="openCase('gold',20)">Open</button>
 </div>
 
 </div>
@@ -164,95 +173,146 @@ Open
 
 <script>
 
+let rolling=false
+let balance=50
+
 const starterCase=[
 
-{name:"P2000",img:"images/p2000.png",rarity:"consumer"},
-{name:"USP-S",img:"images/usp.png",rarity:"consumer"},
-{name:"MP7",img:"images/mp7.png",rarity:"consumer"},
-{name:"FAMAS",img:"images/famas.png",rarity:"consumer"},
-{name:"Glock-18",img:"images/glock.png",rarity:"consumer"}
+{name:"P2000",img:"images/p2000.png",rarity:"consumer",chance:60},
+{name:"USP-S",img:"images/usp.png",rarity:"consumer",chance:60},
+{name:"MP7",img:"images/mp7.png",rarity:"consumer",chance:50},
+{name:"FAMAS",img:"images/famas.png",rarity:"consumer",chance:50},
+{name:"Glock-18",img:"images/glock.png",rarity:"consumer",chance:40}
 
-];
+]
 
 const goldCase=[
 
-{name:"AK-47 Redline",img:"images/ak47.png",rarity:"classified"},
-{name:"M4A4 Desolate Space",img:"images/m4a4.png",rarity:"classified"},
-{name:"AWP Neo Noir",img:"images/awp.png",rarity:"covert"},
-{name:"Desert Eagle",img:"images/deagle.png",rarity:"restricted"},
-{name:"Knife",img:"images/knife.png",rarity:"knife"}
+{name:"AK-47 Redline",img:"images/ak47.png",rarity:"classified",chance:10},
+{name:"M4A4 Desolate Space",img:"images/m4a4.png",rarity:"classified",chance:10},
+{name:"AWP Neo Noir",img:"images/awp.png",rarity:"covert",chance:4},
+{name:"Desert Eagle",img:"images/deagle.png",rarity:"restricted",chance:25},
+{name:"Knife",img:"images/knife.png",rarity:"knife",chance:1}
 
-];
+]
 
-function openCase(type){
+function getRandomItem(items){
 
-let caseItems;
+let totalChance=0
 
-if(type==="starter"){
-caseItems=starterCase;
-}else{
-caseItems=goldCase;
+items.forEach(item=>{
+totalChance+=item.chance
+})
+
+let random=Math.random()*totalChance
+
+let current=0
+
+for(let i=0;i<items.length;i++){
+
+current+=items[i].chance
+
+if(random<=current){
+return items[i]
 }
 
-const roll=document.getElementById("roll");
+}
 
-roll.innerHTML="";
-roll.style.transform="translateX(0px)";
+}
 
-let rollItems=[];
+function updateBalance(){
+document.getElementById("balance").textContent="Balance: $"+balance
+}
 
-for(let i=0;i<60;i++){
+function openCase(type,cost){
 
-const item=caseItems[Math.floor(Math.random()*caseItems.length)];
+if(rolling)return
 
-rollItems.push(item);
+if(balance<cost){
+
+alert("Not enough balance!")
+
+return
+
+}
+
+balance-=cost
+
+updateBalance()
+
+rolling=true
+
+let caseItems=(type==="starter")?starterCase:goldCase
+
+const roll=document.getElementById("roll")
+
+roll.innerHTML=""
+
+roll.style.transition="none"
+
+roll.style.transform="translateX(0px)"
+
+let rollItems=[]
+
+for(let i=0;i<80;i++){
+
+const item=getRandomItem(caseItems)
+
+rollItems.push(item)
 
 }
 
 rollItems.forEach(item=>{
 
-const div=document.createElement("div");
+const div=document.createElement("div")
 
-div.className="item "+item.rarity;
+div.className="item "+item.rarity
 
-div.innerHTML=`
-<img src="${item.img}">
-<p>${item.name}</p>
-`;
+div.innerHTML=`<img src="${item.img}"><p>${item.name}</p>`
 
-roll.appendChild(div);
+roll.appendChild(div)
 
-});
+})
 
-const winIndex=50;
+const nst itemWidth=120
 
-const shift=-(winIndex*120);
+const windowWidth=720
 
-setTimeout(()=>{
+const centerOffset=(windowWidth/2)-(itemWidth/2)
 
-roll.style.transform=`translateX(${shift}px)`;
-
-},100);
+const shift=-(winIndex*itemWidth-centerOffset)
 
 setTimeout(()=>{
 
-const winItem=rollItems[winIndex];
+roll.style.transition="transform 4s cubic-bezier(.17,.67,.35,1)"
 
-const inventory=document.getElementById("inventory");
+roll.style.transform=`translateX(${shift}px)`
 
-const li=document.createElement("li");
+},50)
 
-li.textContent=winItem.name;
+setTimeout(()=>{
 
-inventory.appendChild(li);
+const winItem=rollItems[winIndex]
 
-alert("You won: "+winItem.name);
+const inventory=document.getElementById("inventory")
 
-},5200);
+const li=document.createElement("li")
+
+li.textContent=winItem.name
+
+inventory.appendChild(li)
+
+alert("You won: "+winItem.name)
+
+rolling=false
+
+},4200)
 
 }
+
+updateBalance()
 
 </script>
 
 </body>
-</html>
+</html> winIndex=60
